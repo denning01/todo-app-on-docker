@@ -16,7 +16,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -47,7 +47,7 @@ function App() {
       });
       setPersonName('');
       setTaskDescription('');
-      fetchTodos();
+      await fetchTodos(); // ✅ ensure updated todos list
     } catch (error) {
       console.error('Error creating todo:', error);
     }
@@ -56,7 +56,7 @@ function App() {
   const handleToggleComplete = async (id, completed) => {
     try {
       await axios.put(`${API_URL}/todos/${id}`, { completed: !completed });
-      fetchTodos();
+      await fetchTodos(); // ✅ ensure updated todos list
     } catch (error) {
       console.error('Error updating todo:', error);
     }
@@ -65,7 +65,7 @@ function App() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_URL}/todos/${id}`);
-      fetchTodos();
+      await fetchTodos(); // ✅ ensure updated todos list
     } catch (error) {
       console.error('Error deleting todo:', error);
     }
@@ -146,4 +146,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
